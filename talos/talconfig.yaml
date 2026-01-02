@@ -1,0 +1,39 @@
+clusterName: homelab
+endpoint: https://192.168.1.200:6443  # VIP address
+
+talosVersion: v1.11.5
+kubernetesVersion: v1.34.2
+
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: node1
+    ipAddress: 192.168.18.201
+    controlPlane: true
+    installDisk: /dev/sda
+
+controlPlane:
+  patches:
+    - |-
+      cluster:
+        allowSchedulingOnControlPlanes: true
+        proxy:
+          disabled: true
+        etcd:
+          advertisedSubnets:
+            - 192.168.18.0/24
+      machine:
+        features:
+          kubePrism:
+            enabled: true
+            port: 7445
+        network:
+          nameservers:
+            - 1.1.1.1
+            - 8.8.8.8
+          interfaces:
+            - interface: eth0
+              dhcp: false
+              vip:
+                ip: 192.168.18.200
