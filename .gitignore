@@ -4,3 +4,5 @@
 talos/clusterconfig/*.yaml
 talos/clusterconfig/talosconfig
 !talos/clusterconfig/.gitkeep
+
+**/kubeconfig
