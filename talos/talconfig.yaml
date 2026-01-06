@@ -1,5 +1,5 @@
 clusterName: homelab
-endpoint: https://192.168.1.110:6443  # VIP address
+endpoint: https://192.168.18.110:6443
 
 talosVersion: v1.11.5
 kubernetesVersion: v1.34.2
@@ -11,7 +11,7 @@ nodes:
   - hostname: node1
     ipAddress: 192.168.18.101
     controlPlane: true
-    installDisk: /dev/sda
+    installDisk: /dev/nvme0n1
 
 controlPlane:
   patches:
@@ -33,7 +33,7 @@ controlPlane:
             - 1.1.1.1
             - 8.8.8.8
           interfaces:
-            - interface: eth0
-              dhcp: false
+            - interface: eno1
+              dhcp: true
               vip:
                 ip: 192.168.18.110

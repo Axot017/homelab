@@ -3,8 +3,12 @@ let
 in
 pkgs.mkShell {
   packages = with pkgs; [
-    talosctl
-    kubectl
+    age
     ansible
+    kubectl
+    kubernetes-helm
+    sops
+    talhelper
+    talosctl
   ];
 }
