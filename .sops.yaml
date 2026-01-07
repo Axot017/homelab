@@ -5,3 +5,5 @@ creation_rules:
     age: age1r4z4nnl6uh4ldzm4049zgh4qql9gnv3u7zr4v6edd3vfy8vr2svq34p2zv
   - path_regex: talosconfig\.sops$
     age: age1r4z4nnl6uh4ldzm4049zgh4qql9gnv3u7zr4v6edd3vfy8vr2svq34p2zv
+  - path_regex: sealed-secrets-key-backup\.yaml$
+    age: age1r4z4nnl6uh4ldzm4049zgh4qql9gnv3u7zr4v6edd3vfy8vr2svq34p2zv
