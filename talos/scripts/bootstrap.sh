@@ -129,17 +129,6 @@ echo "Waiting for ArgoCD to be ready..."
 wait_for_pods "argocd" "app.kubernetes.io/name=argocd-server" 300
 
 echo ""
-echo "=== Step 7: Apply App of Apps ==="
-APP_OF_APPS="$REPO_ROOT/kubernetes/argocd/root.yaml"
-if [[ -f "$APP_OF_APPS" ]]; then
-    echo "Applying App of Apps..."
-    kubectl apply -f "$APP_OF_APPS"
-else
-    echo "Warning: $APP_OF_APPS not found, skipping..."
-    echo "Create it and run: kubectl apply -f $APP_OF_APPS"
-fi
-
-echo ""
 echo "=== Bootstrap complete! ==="
 echo ""
 echo "Cluster status:"
