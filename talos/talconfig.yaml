@@ -12,7 +12,12 @@ nodes:
     ipAddress: 192.168.18.101
     controlPlane: true
     installDisk: /dev/nvme0n1
-
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
 controlPlane:
   patches:
     - |-
@@ -50,5 +55,5 @@ controlPlane:
           vm.max_map_count: "262144"
         kernel:
           modules:
-            - name: iscsi_tcp
             - name: nvme_tcp
+            - name: vfio_pci
