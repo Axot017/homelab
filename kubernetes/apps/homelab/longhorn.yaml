@@ -20,6 +20,9 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=false
+    automated:
+      prune: true
+      selfHeal: true
   project: default
   sources:
     - chart: longhorn
