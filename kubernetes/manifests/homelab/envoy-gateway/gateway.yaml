@@ -20,3 +20,18 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homelab-gateway
+  namespace: envoy-gateway-system
+spec:
+  selector:
+    gateway.envoyproxy.io/owning-gateway-name: homelab-gateway
+    gateway.envoyproxy.io/owning-gateway-namespace: envoy-gateway-system
+  ports:
+    - name: http
+      port: 80
+      targetPort: 10080
+      protocol: TCP
