@@ -42,18 +42,3 @@ controlPlane:
               dhcp: true
               vip:
                 ip: 192.168.18.110
-        kubelet:
-          extraMounts:
-            - destination: /var/lib/longhorn
-              type: bind
-              source: /var/lib/longhorn
-              options:
-                - bind
-                - rshared
-                - rw
-        sysctls:
-          vm.max_map_count: "262144"
-        kernel:
-          modules:
-            - name: nvme_tcp
-            - name: vfio_pci
