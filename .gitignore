@@ -8,4 +8,7 @@ talos/clusterconfig/talosconfig
 backup/
 !backup/*.sops.yaml
 
+**/*secret.yaml
+!**/*sealed-secret.yaml
+
 **/kubeconfig

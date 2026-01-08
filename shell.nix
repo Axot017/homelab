@@ -7,6 +7,7 @@ pkgs.mkShell {
     ansible
     kubectl
     kubernetes-helm
+    kubeseal
     sops
     talhelper
     talosctl
