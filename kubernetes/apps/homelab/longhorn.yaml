@@ -23,7 +23,7 @@ spec:
     automated:
       prune: true
       selfHeal: true
-  project: default
+  project: homelab
   sources:
     - chart: longhorn
       repoURL: https://charts.longhorn.io/
