@@ -5,6 +5,7 @@ talos/clusterconfig/*.yaml
 talos/clusterconfig/talosconfig
 !talos/clusterconfig/.gitkeep
 
-sealed-secrets-key-backup.yaml
+backup/
+!backup/*.sops.yaml
 
 **/kubeconfig
