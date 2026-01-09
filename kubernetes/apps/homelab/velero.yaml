@@ -56,6 +56,10 @@ spec:
             podSecurityContext:
               runAsUser: 0
               fsGroup: 0
+          kubectl:
+            image:
+              repository: bitnami/kubectl
+              tag: "latest"
     - repoURL: https://github.com/Axot017/homelab.git
       targetRevision: main
       path: kubernetes/manifests/homelab/velero
