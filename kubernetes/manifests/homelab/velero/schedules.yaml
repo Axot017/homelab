@@ -1,0 +1,52 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: daily-full-backup
+  namespace: velero
+spec:
+  schedule: "0 3 * * *"
+  template:
+    includedNamespaces:
+      - '*'
+    excludedNamespaces:
+      - velero
+      - kube-system
+      - cnpg-system
+    excludedResources:
+      - clusters.postgresql.cnpg.io
+    labelSelector:
+      matchExpressions:
+        - key: velero.io/exclude-from-backup
+          operator: NotIn
+          values:
+            - "true"
+    includedResources:
+      - '*'
+    ttl: 168h
+  useOwnerReferencesInBackup: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: weekly-full-backup
+  namespace: velero
+spec:
+  schedule: "0 4 * * 0"
+  template:
+    includedNamespaces:
+      - '*'
+    excludedNamespaces:
+      - velero
+      - cnpg-system
+    excludedResources:
+      - clusters.postgresql.cnpg.io
+    labelSelector:
+      matchExpressions:
+        - key: velero.io/exclude-from-backup
+          operator: NotIn
+          values:
+            - "true"
+    includedResources:
+      - '*'
+    ttl: 720h
+  useOwnerReferencesInBackup: false
