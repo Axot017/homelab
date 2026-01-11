@@ -15,6 +15,9 @@ spec:
       helm:
         releaseName: nextcloud
         valuesObject:
+          nextcloud:
+            host: nextcloud.mateuszledwon.com
+
           persistence:
             enabled: true
             storageClass: longhorn
