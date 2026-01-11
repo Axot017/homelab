@@ -17,18 +17,3 @@ spec:
       backendRefs:
         - name: nextcloud
           port: 8080
----
-apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: BackendTrafficPolicy
-metadata:
-  name: nextcloud-policy
-  namespace: nextcloud
-spec:
-  targetRefs:
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: nextcloud
-  healthCheck:
-    passive:
-      consecutive5XxErrors: 5
-      interval: 10s

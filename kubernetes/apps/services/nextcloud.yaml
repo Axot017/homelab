@@ -15,26 +15,26 @@ spec:
       helm:
         releaseName: nextcloud
         valuesObject:
-          nextcloud:
-            host: nextcloud.mateuszledwon.com
-            existingSecret:
-              enabled: true
-              secretName: nextcloud-admin-credentials
-              usernameKey: username
-              passwordKey: password
-            extraEnv:
-              - name: OVERWRITEPROTOCOL
-                value: https
-              - name: OVERWRITEHOST
-                value: nextcloud.mateuszledwon.com
-              - name: OVERWRITECLIURL
-                value: https://nextcloud.mateuszledwon.com
-              - name: TRUSTED_PROXIES
-                value: 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
-          
-          phpClientHttpsFix:
-            enabled: true
-            protocol: https
+          # nextcloud:
+          #   host: nextcloud.mateuszledwon.com
+          #   existingSecret:
+          #     enabled: true
+          #     secretName: nextcloud-admin-credentials
+          #     usernameKey: username
+          #     passwordKey: password
+          #   extraEnv:
+          #     - name: OVERWRITEPROTOCOL
+          #       value: https
+          #     - name: OVERWRITEHOST
+          #       value: nextcloud.mateuszledwon.com
+          #     - name: OVERWRITECLIURL
+          #       value: https://nextcloud.mateuszledwon.com
+          #     - name: TRUSTED_PROXIES
+          #       value: 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
+          #
+          # phpClientHttpsFix:
+          #   enabled: true
+          #   protocol: https
           
           persistence:
             enabled: true
