@@ -5,7 +5,9 @@ metadata:
   namespace: nextcloud
 spec:
   parentRefs:
-    - name: homelab-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: homelab-gateway
       namespace: envoy-gateway-system
   hostnames:
     - "nextcloud.mateuszledwon.com"
@@ -15,5 +17,8 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: nextcloud
+        - group: ""
+          kind: Service
+          name: nextcloud
           port: 8080
+          weight: 1
