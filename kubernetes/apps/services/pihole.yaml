@@ -1,0 +1,84 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pihole
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: services
+  
+  sources:
+    - repoURL: https://mojo2600.github.io/pihole-kubernetes
+      chart: pihole
+      targetRevision: 2.35.0
+      helm:
+        releaseName: pihole
+        valuesObject:
+          replicaCount: 1
+          admin:
+            existingSecret: pihole-admin-credentials
+            passwordKey: password
+          
+          DNS1: "1.1.1.1"
+          DNS2: "8.8.8.8"
+          
+          persistentVolumeClaim:
+            enabled: true
+            storageClass: longhorn
+            size: 2Gi
+          
+          serviceDns:
+            type: LoadBalancer
+            port: 53
+            annotations:
+              metallb.universe.tf/loadBalancerIPs: "192.168.18.112"
+          
+          serviceDhcp:
+            enabled: false
+          
+          serviceWeb:
+            type: ClusterIP
+            http:
+              enabled: true
+              port: 80
+            https:
+              enabled: false
+          
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          
+          extraEnvVars:
+            TZ: "Europe/Warsaw"
+          
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+    
+    - repoURL: https://github.com/Axot017/homelab.git
+      targetRevision: main
+      path: kubernetes/manifests/services/pihole
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: pihole
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 3m

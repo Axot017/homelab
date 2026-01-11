@@ -3,8 +3,6 @@ kind: Cluster
 metadata:
   name: nextcloud-postgres
   namespace: nextcloud
-  labels:
-    velero.io/exclude-from-backup: "true"
 spec:
   instances: 1
   
