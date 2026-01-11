@@ -5,6 +5,7 @@ pkgs.mkShell {
   packages = with pkgs; [
     age
     ansible
+    just
     kubectl
     kubernetes-helm
     kubeseal
