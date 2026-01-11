@@ -35,3 +35,17 @@ spec:
       port: 80
       targetPort: 10080
       protocol: TCP
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: client-ip-detection
+  namespace: envoy-gateway-system
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: homelab-gateway
+  clientIPDetection:
+    xForwardedFor:
+      numTrustedHops: 1
