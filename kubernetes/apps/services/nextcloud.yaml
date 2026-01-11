@@ -44,20 +44,18 @@ spec:
               passwordKey: password
 
           redis:
-            enabled: false
-          # redis:
-          #   enabled: true
-          #   auth:
-          #     enabled: true
-          #     existingSecret: nextcloud-redis-credentials
-          #     existingSecretPasswordKey: password
-          #   master:
-          #     persistence:
-          #       enabled: true
-          #       storageClass: longhorn
-          #       size: 2Gi
-          #   replica:
-          #     replicaCount: 0
+            enabled: true
+            auth:
+              enabled: true
+              existingSecret: nextcloud-redis-credentials
+              existingSecretPasswordKey: password
+            master:
+              persistence:
+                enabled: true
+                storageClass: longhorn
+                size: 2Gi
+            replica:
+              replicaCount: 0
 
           ingress:
             enabled: false
@@ -91,11 +89,11 @@ spec:
         duration: 10s
         factor: 2
         maxDuration: 3m
-  # ignoreDifferences:
-  #   - group: postgresql.cnpg.io
-  #     kind: Cluster
-  #     jsonPointers:
-  #       - /spec/bootstrap
-  #       - /spec/postgresql/parameters
-  #       - /spec/resources
-  #       - /spec/storage
+  ignoreDifferences:
+    - group: postgresql.cnpg.io
+      kind: Cluster
+      jsonPointers:
+        - /spec/bootstrap
+        - /spec/postgresql/parameters
+        - /spec/resources
+        - /spec/storage
