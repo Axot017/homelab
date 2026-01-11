@@ -87,3 +87,11 @@ spec:
         duration: 10s
         factor: 2
         maxDuration: 3m
+  ignoreDifferences:
+    - group: postgresql.cnpg.io
+      kind: Cluster
+      jsonPointers:
+        - /spec/bootstrap
+        - /spec/postgresql/parameters
+        - /spec/resources
+        - /spec/storage

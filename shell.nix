@@ -11,5 +11,6 @@ pkgs.mkShell {
     sops
     talhelper
     talosctl
+    velero
   ];
 }
