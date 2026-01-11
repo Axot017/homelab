@@ -30,9 +30,10 @@ spec:
           
           serviceDns:
             type: LoadBalancer
+            loadBalancerIP: 192.168.18.123
             port: 53
             annotations:
-              metallb.universe.tf/loadBalancerIPs: "192.168.18.123"
+              metallb.universe.tf/allow-shared-ip: pihole-svc
           
           serviceDhcp:
             enabled: false
