@@ -32,7 +32,7 @@ spec:
             type: LoadBalancer
             port: 53
             annotations:
-              metallb.universe.tf/loadBalancerIPs: "192.168.18.112"
+              metallb.universe.tf/loadBalancerIPs: "192.168.18.123"
           
           serviceDhcp:
             enabled: false
@@ -52,15 +52,6 @@ spec:
             limits:
               cpu: 500m
               memory: 512Mi
-          
-          extraEnvVars:
-            TZ: "Europe/Warsaw"
-          
-          probes:
-            liveness:
-              enabled: true
-            readiness:
-              enabled: true
     
     - repoURL: https://github.com/Axot017/homelab.git
       targetRevision: main
