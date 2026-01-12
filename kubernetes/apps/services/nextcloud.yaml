@@ -60,18 +60,7 @@ spec:
               passwordKey: password
 
           redis:
-            enabled: true
-            auth:
-              enabled: true
-              existingSecret: nextcloud-redis-credentials
-              existingSecretPasswordKey: password
-            master:
-              persistence:
-                enabled: true
-                storageClass: longhorn
-                size: 3Gi
-            replica:
-              replicaCount: 0
+            enabled: false
 
           ingress:
             enabled: false
