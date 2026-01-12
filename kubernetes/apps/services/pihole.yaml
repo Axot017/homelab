@@ -32,13 +32,13 @@ spec:
             type: LoadBalancer
             loadBalancerIP: 192.168.18.123
             annotations:
-              metallb.io/allow-shared-ip: pihole-svc
+              lbipam.cilium.io/sharing-key: pihole-svc
           
           serviceWeb:
             type: LoadBalancer
             loadBalancerIP: 192.168.18.123
             annotations:
-              metallb.io/allow-shared-ip: pihole-svc
+              lbipam.cilium.io/sharing-key: pihole-svc
           
           resources:
             requests:
