@@ -67,7 +67,7 @@ spec:
               existingSecretPasswordKey: password
             master:
               persistence:
-                enabled: true
+                enabled: false
                 storageClass: longhorn
                 size: 2Gi
             replica:
