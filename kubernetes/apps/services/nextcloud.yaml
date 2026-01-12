@@ -60,7 +60,7 @@ spec:
               passwordKey: password
 
           redis:
-            enabled: true
+            enabled: false
             auth:
               enabled: true
               existingSecret: nextcloud-redis-credentials
