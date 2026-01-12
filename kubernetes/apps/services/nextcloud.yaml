@@ -45,10 +45,10 @@ spec:
             size: 50Gi
 
           internalDatabase:
-            enabled: false
+            enabled: true
 
           externalDatabase:
-            enabled: true
+            enabled: false
             type: postgresql
             host: nextcloud-postgres-rw.nextcloud.svc.cluster.local
             database: nextcloud
@@ -59,7 +59,7 @@ spec:
               passwordKey: password
 
           redis:
-            enabled: true
+            enabled: false
             auth:
               enabled: true
               existingSecret: nextcloud-redis-credentials
