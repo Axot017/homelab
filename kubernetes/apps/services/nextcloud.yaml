@@ -17,11 +17,13 @@ spec:
         valuesObject:
           nextcloud:
             host: nextcloud.mateuszledwon.com
+
             existingSecret:
               enabled: true
               secretName: nextcloud-admin-credentials
               usernameKey: username
               passwordKey: password
+
             configs:
               proxy.config.php: |-
                 <?php
@@ -37,39 +39,43 @@ spec:
                   ),
                   'overwriteprotocol' => 'https',
                 );
+
           persistence:
-            enabled: false
+            enabled: true
             storageClass: longhorn
             size: 50Gi
+
           internalDatabase:
-            enabled: true
-          # externalDatabase:
-          #   enabled: true
-          #   type: postgresql
-          #   host: nextcloud-postgres-rw.nextcloud.svc.cluster.local
-          #   database: nextcloud
-          #   existingSecret:
-          #     enabled: true
-          #     secretName: nextcloud-postgres-app
-          #     usernameKey: username
-          #     passwordKey: password
-          redis:
             enabled: false
-          # redis:
-          #   enabled: true
-          #   auth:
-          #     enabled: true
-          #     existingSecret: nextcloud-redis-credentials
-          #     existingSecretPasswordKey: password
-          #   master:
-          #     persistence:
-          #       enabled: true
-          #       storageClass: longhorn
-          #       size: 2Gi
-          #   replica:
-          #     replicaCount: 0
+
+          externalDatabase:
+            enabled: true
+            type: postgresql
+            host: nextcloud-postgres-rw.nextcloud.svc.cluster.local
+            database: nextcloud
+            existingSecret:
+              enabled: true
+              secretName: nextcloud-postgres-app
+              usernameKey: username
+              passwordKey: password
+
+          redis:
+            enabled: true
+            auth:
+              enabled: true
+              existingSecret: nextcloud-redis-credentials
+              existingSecretPasswordKey: password
+            master:
+              persistence:
+                enabled: true
+                storageClass: longhorn
+                size: 2Gi
+            replica:
+              replicaCount: 0
+
           ingress:
             enabled: false
+
           resources:
             requests:
               cpu: 200m
