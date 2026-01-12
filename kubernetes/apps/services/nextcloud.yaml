@@ -1,104 +1,104 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: nextcloud
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  project: services
-
-  sources:
-    - repoURL: https://nextcloud.github.io/helm
-      chart: nextcloud
-      targetRevision: 8.7.0
-      helm:
-        releaseName: nextcloud
-        valuesObject:
-          nextcloud:
-            host: nextcloud.mateuszledwon.com
-
-            existingSecret:
-              enabled: true
-              secretName: nextcloud-admin-credentials
-              usernameKey: username
-              passwordKey: password
-
-            configs:
-              proxy.config.php: |-
-                <?php
-                $CONFIG = array(
-                  'trusted_proxies' => array(
-                    0 => '127.0.0.1',
-                    1 => '10.0.0.0/8',
-                    2 => '172.16.0.0/12',
-                    3 => '192.168.0.0/16',
-                  ),
-                  'forwarded_for_headers' => array(
-                    0 => 'HTTP_X_FORWARDED_FOR',
-                  ),
-                  'overwriteprotocol' => 'https',
-                );
-
-          persistence:
-            enabled: true
-            storageClass: longhorn
-            size: 50Gi
-
-          internalDatabase:
-            enabled: false
-
-          externalDatabase:
-            enabled: true
-            type: postgresql
-            host: nextcloud-postgres-rw.nextcloud.svc.cluster.local
-            database: nextcloud
-            existingSecret:
-              enabled: true
-              secretName: nextcloud-postgres-app
-              usernameKey: username
-              passwordKey: password
-
-          redis:
-            enabled: false
-
-          ingress:
-            enabled: false
-
-          resources:
-            requests:
-              cpu: 200m
-              memory: 256Mi
-            limits:
-              cpu: 2000m
-              memory: 2Gi
-
-    - repoURL: https://github.com/Axot017/homelab.git
-      targetRevision: main
-      path: kubernetes/manifests/services/nextcloud
-
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: nextcloud
-
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
-    retry:
-      limit: 5
-      backoff:
-        duration: 10s
-        factor: 2
-        maxDuration: 3m
-  ignoreDifferences:
-    - group: postgresql.cnpg.io
-      kind: Cluster
-      jsonPointers:
-        - /spec/bootstrap
-        - /spec/postgresql/parameters
-        - /spec/resources
-        - /spec/storage
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: nextcloud
+#   namespace: argocd
+#   finalizers:
+#     - resources-finalizer.argocd.argoproj.io
+# spec:
+#   project: services
+#
+#   sources:
+#     - repoURL: https://nextcloud.github.io/helm
+#       chart: nextcloud
+#       targetRevision: 8.7.0
+#       helm:
+#         releaseName: nextcloud
+#         valuesObject:
+#           nextcloud:
+#             host: nextcloud.mateuszledwon.com
+#
+#             existingSecret:
+#               enabled: true
+#               secretName: nextcloud-admin-credentials
+#               usernameKey: username
+#               passwordKey: password
+#
+#             configs:
+#               proxy.config.php: |-
+#                 <?php
+#                 $CONFIG = array(
+#                   'trusted_proxies' => array(
+#                     0 => '127.0.0.1',
+#                     1 => '10.0.0.0/8',
+#                     2 => '172.16.0.0/12',
+#                     3 => '192.168.0.0/16',
+#                   ),
+#                   'forwarded_for_headers' => array(
+#                     0 => 'HTTP_X_FORWARDED_FOR',
+#                   ),
+#                   'overwriteprotocol' => 'https',
+#                 );
+#
+#           persistence:
+#             enabled: true
+#             storageClass: longhorn
+#             size: 50Gi
+#
+#           internalDatabase:
+#             enabled: false
+#
+#           externalDatabase:
+#             enabled: true
+#             type: postgresql
+#             host: nextcloud-postgres-rw.nextcloud.svc.cluster.local
+#             database: nextcloud
+#             existingSecret:
+#               enabled: true
+#               secretName: nextcloud-postgres-app
+#               usernameKey: username
+#               passwordKey: password
+#
+#           redis:
+#             enabled: false
+#
+#           ingress:
+#             enabled: false
+#
+#           resources:
+#             requests:
+#               cpu: 200m
+#               memory: 256Mi
+#             limits:
+#               cpu: 2000m
+#               memory: 2Gi
+#
+#     - repoURL: https://github.com/Axot017/homelab.git
+#       targetRevision: main
+#       path: kubernetes/manifests/services/nextcloud
+#
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: nextcloud
+#
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+#     syncOptions:
+#       - CreateNamespace=true
+#       - ServerSideApply=true
+#     retry:
+#       limit: 5
+#       backoff:
+#         duration: 10s
+#         factor: 2
+#         maxDuration: 3m
+#   ignoreDifferences:
+#     - group: postgresql.cnpg.io
+#       kind: Cluster
+#       jsonPointers:
+#         - /spec/bootstrap
+#         - /spec/postgresql/parameters
+#         - /spec/resources
+#         - /spec/storage
