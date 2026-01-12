@@ -23,7 +23,7 @@ spec:
               usernameKey: username
               passwordKey: password
           persistence:
-            enabled: true
+            enabled: false
             storageClass: longhorn
             size: 50Gi
           internalDatabase:
