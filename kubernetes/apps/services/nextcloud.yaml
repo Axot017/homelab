@@ -38,7 +38,7 @@ spec:
                   'overwriteprotocol' => 'https',
                 );
           persistence:
-            enabled: true
+            enabled: false
             storageClass: longhorn
             size: 50Gi
           internalDatabase:
