@@ -1,37 +1,37 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: longhorn
-  namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
-spec:
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=false
-    automated:
-      prune: true
-      selfHeal: true
-  project: homelab
-  sources:
-    - chart: longhorn
-      repoURL: https://charts.longhorn.io/
-      targetRevision: v1.10.1
-      helm:
-        releaseName: longhorn
-        valuesObject:
-          preUpgradeChecker:
-            jobEnabled: false
-          persistence:
-            defaultClass: true
-            defaultClassReplicaCount: 1
-          defaultSettings:
-            defaultReplicaCount: 1
-            storageMinimalAvailablePercentage: 10
-            storageReservedPercentageForDefaultDisk: 15
-          longhornUI:
-            replicas: 1
-          enablePSP: false
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: longhorn-system
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: longhorn
+#   namespace: argocd
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "0"
+# spec:
+#   syncPolicy:
+#     syncOptions:
+#       - CreateNamespace=false
+#     automated:
+#       prune: true
+#       selfHeal: true
+#   project: homelab
+#   sources:
+#     - chart: longhorn
+#       repoURL: https://charts.longhorn.io/
+#       targetRevision: v1.10.1
+#       helm:
+#         releaseName: longhorn
+#         valuesObject:
+#           preUpgradeChecker:
+#             jobEnabled: false
+#           persistence:
+#             defaultClass: true
+#             defaultClassReplicaCount: 1
+#           defaultSettings:
+#             defaultReplicaCount: 1
+#             storageMinimalAvailablePercentage: 10
+#             storageReservedPercentageForDefaultDisk: 15
+#           longhornUI:
+#             replicas: 1
+#           enablePSP: false
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: longhorn-system
