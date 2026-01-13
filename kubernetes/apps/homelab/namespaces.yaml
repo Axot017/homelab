@@ -3,29 +3,26 @@ kind: Application
 metadata:
   name: envoy-gateway
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: homelab
   
   sources:
-    - repoURL: docker.io/envoyproxy
-      chart: gateway-helm
-      targetRevision: v1.6.1
-      helm:
-        releaseName: envoy-gateway
     - repoURL: https://github.com/Axot017/homelab.git
       targetRevision: main
-      path: kubernetes/manifests/homelab/envoy-gateway
+      path: kubernetes/manifests/homelab/namespaces
   
   destination:
     server: https://kubernetes.default.svc
-    namespace: envoy-gateway-system
+    namespace: kube-system
   
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+      - CreateNamespace=false
       - ServerSideApply=true
