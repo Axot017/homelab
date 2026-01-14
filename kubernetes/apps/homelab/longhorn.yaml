@@ -33,6 +33,11 @@ spec:
           longhornUI:
             replicas: 1
           enablePSP: false
+          csi:
+            attacherReplicaCount: 1
+            provisionerReplicaCount: 1
+            resizerReplicaCount: 1
+            snapshotterReplicaCount: 1
   destination:
     server: https://kubernetes.default.svc
     namespace: longhorn-system
