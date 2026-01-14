@@ -26,6 +26,10 @@ spec:
             defaultClass: true
             defaultClassReplicaCount: 1
             dataEngine: "v2"
+          defaultBackupStore:
+            backupTarget: s3://mateuszledwon-homelab-backup@eu-central-1/longhorn/
+            backupTargetCredentialSecret: longhorn-aws-key
+            pollInterval: 180
           defaultSettings:
             defaultReplicaCount: 1
             storageMinimalAvailablePercentage: 10
@@ -33,6 +37,9 @@ spec:
           longhornUI:
             replicas: 1
           enablePSP: false
+    - repoURL: https://github.com/Axot017/homelab.git
+      targetRevision: main
+      path: kubernetes/manifests/homelab/longhorn
   destination:
     server: https://kubernetes.default.svc
     namespace: longhorn-system
