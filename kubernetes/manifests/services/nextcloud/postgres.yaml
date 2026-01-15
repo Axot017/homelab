@@ -3,8 +3,6 @@ kind: Cluster
 metadata:
   name: nextcloud-postgres
   namespace: nextcloud
-  annotations:
-    cnpg.io/hibernation: "on"
 spec:
   instances: 1
   

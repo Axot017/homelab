@@ -17,7 +17,6 @@ spec:
       helm:
         releaseName: nextcloud
         valuesObject:
-          replicaCount: 0
           nextcloud:
             host: nextcloud.mateuszledwon.com
 
