@@ -19,4 +19,8 @@ spec:
     - apiVersion: apps/v1
       kind: Deployment
       name: sealed-secrets-controller
-      namespace: sealed-secrets
+      namespace: kube-system
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: cert-manager
+      namespace: cert-manager
