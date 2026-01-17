@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - ./helm-sealed-secrets.yaml
   - ./helm-cert-manager.yaml
+  - ./oci-envoy-gateway.yaml
