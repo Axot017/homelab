@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: envoy-gateway
+  namespace: envoy-gateway-system
+spec:
+  interval: 10m
+  chartRef:
+    spec:
+      kind: OciRepository
+      name: envoy-gateway
+      namespace: flux-system
