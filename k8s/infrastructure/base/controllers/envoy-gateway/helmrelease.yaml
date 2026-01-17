@@ -6,6 +6,6 @@ metadata:
 spec:
   interval: 10m
   chartRef:
-    kind: OciRepository
+    kind: OCIRepository
     name: envoy-gateway
     namespace: flux-system
