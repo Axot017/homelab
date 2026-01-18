@@ -20,7 +20,7 @@ spec:
     persistence:
       defaultClass: true
       defaultClassReplicaCount: 1
-      dataEngine: "v2"
+      dataEngine: "v1"
     defaultBackupStore:
       backupTarget: s3://mateuszledwon-homelab-backup@eu-central-1/longhorn/
       backupTargetCredentialSecret: longhorn-aws-key
