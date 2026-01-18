@@ -4,4 +4,5 @@ resources:
   - ./helm-sealed-secrets.yaml
   - ./helm-cert-manager.yaml
   - ./helm-metrics-server.yaml
+  - ./helm-longhorn.yaml
   - ./oci-envoy-gateway.yaml
