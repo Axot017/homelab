@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: velero
+  namespace: velero
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: velero
+      version: 11.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: velero
+        namespace: flux-system
+      interval: 10m
+  values:
+    credentials:
+      existingSecret: velero-s3-credentials
+    configuration:
+      backupStorageLocation:
+        - name: default
+          provider: aws
+          bucket: mateuszledwon-homelab-backup
+          config:
+            region: eu-central-1
+      volumeSnapshotLocation:
+        - name: default
+          provider: aws
+          config:
+            region: eu-central-1
+      defaultBackupStorageLocation: default
+      defaultVolumeSnapshotLocation: default
+    initContainers:
+      - name: velero-plugin-for-aws
+        image: velero/velero-plugin-for-aws:v1.13.1
+        volumeMounts:
+          - name: plugins
+            mountPath: /target
+    snapshotsEnabled: false
+    deployNodeAgent: true
+    nodeAgent:
+      podSecurityContext:
+        runAsUser: 0
+        fsGroup: 0
+    kubectl:
+      image:
+        repository: public.ecr.aws/bitnami/kubectl
+        tag: "1.34"

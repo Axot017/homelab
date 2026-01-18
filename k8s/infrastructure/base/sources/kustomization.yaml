@@ -1,8 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./helm-sealed-secrets.yaml
   - ./helm-cert-manager.yaml
-  - ./helm-metrics-server.yaml
   - ./helm-longhorn.yaml
+  - ./helm-metrics-server.yaml
+  - ./helm-sealed-secrets.yaml
+  - ./helm-velero.yaml
   - ./oci-envoy-gateway.yaml
