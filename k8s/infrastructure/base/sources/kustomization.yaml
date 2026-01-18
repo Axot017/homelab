@@ -6,4 +6,5 @@ resources:
   - ./helm-metrics-server.yaml
   - ./helm-sealed-secrets.yaml
   - ./helm-velero.yaml
+  - ./helm-prometheus-stack.yaml
   - ./oci-envoy-gateway.yaml
