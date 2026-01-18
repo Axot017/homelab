@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - ./aws-key-sealed-secret.yaml
 
-  - ../../../base/controllers/longhorn/
+  # - ../../../base/controllers/longhorn/
