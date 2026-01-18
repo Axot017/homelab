@@ -4,3 +4,4 @@ resources:
   - ./cert-manager
   - ./envoy-gateway
   - ./sealed-secrets
+  - ./metrics-server
