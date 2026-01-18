@@ -1,0 +1,34 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: longhorn
+      version: v1.10.1
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+        namespace: flux-system
+      interval: 10m
+  values:
+    preUpgradeChecker:
+      jobEnabled: false
+    persistence:
+      defaultClass: true
+      defaultClassReplicaCount: 1
+      dataEngine: "v2"
+    defaultBackupStore:
+      backupTarget: s3://mateuszledwon-homelab-backup@eu-central-1/longhorn/
+      backupTargetCredentialSecret: longhorn-aws-key
+      pollInterval: 180
+    defaultSettings:
+      defaultReplicaCount: 1
+      storageMinimalAvailablePercentage: 10
+      storageReservedPercentageForDefaultDisk: 15
+    longhornUI:
+      replicas: 1
+    enablePSP: false
