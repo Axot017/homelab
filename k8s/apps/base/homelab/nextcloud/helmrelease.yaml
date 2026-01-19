@@ -1,0 +1,74 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nextcloud
+  namespace: nextcloud
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: nextcloud
+      version: 8.7.0
+      sourceRef:
+        kind: HelmRepository
+        name: nextcloud
+        namespace: flux-system
+      interval: 10m
+  values:
+    nextcloud:
+      host: nextcloud.mateuszledwon.com
+
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-admin-credentials
+        usernameKey: username
+        passwordKey: password
+
+      configs:
+        proxy.config.php: |-
+          <?php
+          $CONFIG = array(
+            'trusted_proxies' => array(
+              0 => '127.0.0.1',
+              1 => '10.0.0.0/8',
+              2 => '172.16.0.0/12',
+              3 => '192.168.0.0/16',
+            ),
+            'forwarded_for_headers' => array(
+              0 => 'HTTP_X_FORWARDED_FOR',
+            ),
+            'overwriteprotocol' => 'https',
+          );
+
+    persistence:
+      enabled: true
+      storageClass: longhorn
+      size: 50Gi
+
+    internalDatabase:
+      enabled: false
+
+    externalDatabase:
+      enabled: true
+      type: postgresql
+      host: nextcloud-postgres-rw.nextcloud.svc.cluster.local
+      database: nextcloud
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-postgres-app
+        usernameKey: username
+        passwordKey: password
+
+    redis:
+      enabled: false
+
+    ingress:
+      enabled: false
+
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        cpu: 2000m
+        memory: 2Gi
