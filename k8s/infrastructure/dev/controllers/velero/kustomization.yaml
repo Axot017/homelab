@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - ./s3-key-sealed-secret.yaml
 
-  - ../../../base/controllers/velero/
+  # - ../../../base/controllers/velero/
