@@ -5,21 +5,21 @@ metadata:
   namespace: nextcloud
 spec:
   instances: 1
-  
+
   storage:
     storageClass: longhorn
     size: 10Gi
-  
+
   postgresql:
     parameters:
       shared_buffers: "256MB"
       effective_cache_size: "512MB"
-  
+
   bootstrap:
     initdb:
       database: nextcloud
       owner: nextcloud
-  
+
   resources:
     requests:
       memory: "256Mi"
@@ -32,9 +32,10 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: nextcloud-postgres
+  namespace: nextcloud
 spec:
   selector:
     matchLabels:
       cnpg.io/cluster: nextcloud-postgres
   podMetricsEndpoints:
-  - port: metrics
+    - port: metrics
