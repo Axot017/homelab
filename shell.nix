@@ -14,5 +14,6 @@ pkgs.mkShell {
     talhelper
     talosctl
     velero
+    kustomize
   ];
 }
