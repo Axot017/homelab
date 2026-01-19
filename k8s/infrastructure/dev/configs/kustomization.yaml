@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
   - ./envoy-gateway/
   - ./longhorn/
-  - ./velero/
