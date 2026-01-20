@@ -1,0 +1,43 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: n8n-postgres
+  namespace: n8n
+spec:
+  instances: 1
+
+  storage:
+    storageClass: longhorn
+    size: 10Gi
+
+  postgresql:
+    parameters:
+      shared_buffers: "256MB"
+      effective_cache_size: "512MB"
+
+  bootstrap:
+    initdb:
+      database: n8n
+      owner: n8n
+      secret:
+        name: n8n-postgres-credentials
+
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "1Gi"
+      cpu: "1"
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: n8n-postgres
+  namespace: n8n
+spec:
+  selector:
+    matchLabels:
+      cnpg.io/cluster: n8n-postgres
+  podMetricsEndpoints:
+    - port: metrics
