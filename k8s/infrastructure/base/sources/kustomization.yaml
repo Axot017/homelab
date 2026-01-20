@@ -6,6 +6,7 @@ resources:
   - ./helm-longhorn.yaml
   - ./helm-metrics-server.yaml
   - ./helm-nextcloud.yaml
+  - ./helm-pihole.yaml
   - ./helm-prometheus-stack.yaml
   - ./helm-sealed-secrets.yaml
   - ./helm-velero.yaml
