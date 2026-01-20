@@ -16,7 +16,6 @@ spec:
       interval: 10m
   values:
     externalPostgresql:
-      enabled: true
       host: n8n-postgres-rw.n8n.svc.cluster.local
       database: n8n
       username: n8n
@@ -29,10 +28,6 @@ spec:
       type: postgresdb
 
     main:
-      persistance:
-        enabled: true
-        size: 10Gi
-        storageClass: longhorn
       resources:
         requests:
           cpu: 100m
