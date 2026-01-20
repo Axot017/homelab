@@ -5,6 +5,7 @@ resources:
   - ./helm-cnpg-operator.yaml
   - ./helm-longhorn.yaml
   - ./helm-metrics-server.yaml
+  - ./helm-n8n.yaml
   - ./helm-nextcloud.yaml
   - ./helm-pihole.yaml
   - ./helm-prometheus-stack.yaml
