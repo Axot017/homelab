@@ -22,7 +22,7 @@ spec:
       existingSecret: n8n-postgres-credentials
     externalRedis:
       existingSecret: n8n-valkey-credentials
-      host: n8n-valkey-master.n8n.svc.cluster.local
+      host: n8n-valkey-primary.n8n.svc.cluster.local
 
     log:
       level: warn
