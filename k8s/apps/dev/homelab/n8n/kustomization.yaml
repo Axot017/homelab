@@ -2,5 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./pg-credentials-sealed-secret.yaml
+  - ./valkey-credentials-sealed-secret.yaml
 
   - ../../../base/homelab/n8n/
