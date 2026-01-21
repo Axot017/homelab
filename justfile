@@ -9,22 +9,17 @@ pfall:
     echo "Press Ctrl+C to stop all"
     echo ""
     echo "Services:"
-    echo "  ArgoCD:     http://localhost:8080"
     echo "  Grafana:    http://localhost:8081"
     echo "  Longhorn:   http://localhost:8082"
     echo "  Pi-hole:    http://localhost:8083"
     echo ""
     
-    kubectl port-forward svc/argocd-server -n argocd 8080:80 &
     kubectl port-forward svc/prometheus-stack-grafana -n monitoring 8081:80 &
     kubectl port-forward svc/longhorn-frontend -n longhorn-system 8082:80 &
     kubectl port-forward svc/pihole-web -n pihole 8083:80 &
 
     trap "kill 0" SIGINT SIGTERM
     wait
-
-pfargocd:
-    kubectl port-forward svc/argocd-server -n argocd 8080:80
 
 pfgrafana:
     kubectl port-forward svc/prometheus-stack-grafana -n monitoring 8081:80
