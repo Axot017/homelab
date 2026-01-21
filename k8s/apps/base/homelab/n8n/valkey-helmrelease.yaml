@@ -5,15 +5,10 @@ metadata:
   namespace: n8n
 spec:
   interval: 10m
-  chart:
-    spec:
-      chart: valkey
-      version: 5.1.2
-      sourceRef:
-        kind: HelmRepository
-        name: valkey
-        namespace: flux-system
-      interval: 10m
+  chartRef:
+    kind: OCIRepository
+    name: valkey
+    namespace: flux-system
   values:
     architecture: standalone
     auth:
