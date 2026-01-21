@@ -4,4 +4,4 @@ resources:
   - ./pg-credentials-sealed-secret.yaml
   - ./valkey-credentials-sealed-secret.yaml
 
-  - ../../../base/homelab/n8n/
+  # - ../../../base/homelab/n8n/
