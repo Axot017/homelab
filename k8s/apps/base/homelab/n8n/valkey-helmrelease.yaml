@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: n8n-valkey
+  namespace: n8n
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: valkey
+      version: 5.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: valkey
+        namespace: flux-system
+      interval: 10m
+  values:
+    architecture: standalone
+    auth:
+      enabled: true
+      existingSecret: n8n-valkey-credentials
+      existingSecretPasswordKey: redis-password
+    primary:
+      persistence:
+        enabled: true
+        storageClass: longhorn
+        size: 2Gi
+
+      resources:
+        requests:
+          cpu: 50m
+          memory: 64Mi
+        limits:
+          cpu: 500m
+          memory: 256Mi
+    replica:
+      replicaCount: 0
+
+    sentinel:
+      enabled: false
+
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: n8n
