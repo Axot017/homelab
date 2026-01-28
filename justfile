@@ -1,32 +1,6 @@
 default:
     @just --list
 
-pfall:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    
-    echo "Starting all port forwards..."
-    echo "Press Ctrl+C to stop all"
-    echo ""
-    echo "Services:"
-    echo "  Grafana:    http://localhost:8081"
-    echo "  Longhorn:   http://localhost:8082"
-    echo "  Pi-hole:    http://localhost:8083"
-    echo ""
-    
-    kubectl port-forward svc/prometheus-stack-grafana -n monitoring 8081:80 &
-    kubectl port-forward svc/longhorn-frontend -n longhorn-system 8082:80 &
-    kubectl port-forward svc/pihole-web -n pihole 8083:80 &
-
-    trap "kill 0" SIGINT SIGTERM
-    wait
-
-pfgrafana:
-    kubectl port-forward svc/prometheus-stack-grafana -n monitoring 8081:80
-
-pflonghorn:
-    kubectl port-forward svc/longhorn-frontend -n longhorn-system 8082:80
-
 seal path:
     #!/usr/bin/env bash
     set -euo pipefail

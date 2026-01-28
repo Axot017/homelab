@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+#USAGE arg "<path>" help="Path to the Kubernetes secret YAML file to be sealed"
+
+set -euo pipefail
+
+input="${usage_path?}"
+
+if [[ ! -f "$input" ]]; then
+    echo "Error: File '$input' not found"
+    exit 1
+fi
+
+# Generate output filename: *sealed-secret.yaml -> *secret.yaml
+output="${input/sealed-secret.yaml/secret.yaml}"
+
+if [[ "$input" == "$output" ]]; then
+    echo "Error: Input file must end with 'sealed-secret.yaml'"
+    exit 1
+fi
+
+# Extract secret name and namespace from sealed secret
+name=$(yq -r '.metadata.name' "$input")
+namespace=$(yq -r '.metadata.namespace' "$input")
+
+echo "Fetching secret '$name' from namespace '$namespace'..."
+
+kubectl get secret "$name" -n "$namespace" -o yaml | \
+    yq 'del(.metadata.resourceVersion, .metadata.uid, .metadata.creationTimestamp, .metadata.managedFields, .metadata.annotations["kubectl.kubernetes.io/last-applied-configuration"])' \
+    > "$output"
+
+echo "✓ Secret saved to: $output"
+echo ""
+echo "⚠ Warning: This file contains sensitive data. Don't commit it!"

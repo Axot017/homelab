@@ -1,0 +1,8 @@
+[tools]
+yq = "latest"
+kubeseal = "latest"
+kubectl = "v1.35.0"
+sops = "latest"
+age = "latest"
+talosctl = "latest"
+talhelper = "latest"

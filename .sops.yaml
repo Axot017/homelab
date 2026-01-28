@@ -1,7 +1,7 @@
 creation_rules:
   - path_regex: \.sops\.yaml$
-    age: age1r4z4nnl6uh4ldzm4049zgh4qql9gnv3u7zr4v6edd3vfy8vr2svq34p2zv
+    age: age13tcz5qhkdc0vqpxk7j8kee7eh23l6gcfc8pr5nycvcjpd557a3csu2lkxt
   - path_regex: talosconfig(\.sops)?$
-    age: age1r4z4nnl6uh4ldzm4049zgh4qql9gnv3u7zr4v6edd3vfy8vr2svq34p2zv
+    age: age13tcz5qhkdc0vqpxk7j8kee7eh23l6gcfc8pr5nycvcjpd557a3csu2lkxt
   - path_regex: backup/.+(\.sops)?\.yaml$
-    age: age1r4z4nnl6uh4ldzm4049zgh4qql9gnv3u7zr4v6edd3vfy8vr2svq34p2zv
+    age: age13tcz5qhkdc0vqpxk7j8kee7eh23l6gcfc8pr5nycvcjpd557a3csu2lkxt
