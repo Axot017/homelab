@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vibe
+  namespace: vibe
+  labels:
+    app: vibe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vibe
+  template:
+    metadata:
+      labels:
+        app: vibe
+    spec:
+      containers:
+        - name: vibe
+          image: ghcr.io/axot017/vibe:latest
+          imagePullPolicy: Always
+          env:
+            - name: OPENCODE_PORT
+              value: "3000"
+            - name: DOCKER_HOST
+              value: unix:///var/run/docker.sock
+          envFrom:
+            - secretRef:
+                name: vibe-env
+                optional: true
+          ports:
+            - name: opencode
+              containerPort: 3000
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          volumeMounts:
+            - name: workspace
+              mountPath: /workspace
+            - name: docker-run
+              mountPath: /var/run
+        - name: dind
+          image: docker:24-dind
+          securityContext:
+            privileged: true
+          env:
+            - name: DOCKER_TLS_CERTDIR
+              value: ""
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          volumeMounts:
+            - name: docker-lib
+              mountPath: /var/lib/docker
+            - name: docker-run
+              mountPath: /var/run
+      volumes:
+        - name: workspace
+          emptyDir: {}
+        - name: docker-lib
+          emptyDir: {}
+        - name: docker-run
+          emptyDir: {}
