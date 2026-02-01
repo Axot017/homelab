@@ -52,12 +52,16 @@ spec:
               cpu: 2000m
               memory: 4Gi
           volumeMounts:
-            - name: workspace
+            - name: vibe-data
               mountPath: /workspace
-            - name: podman-storage
+              subPath: workspace
+            - name: vibe-data
+              mountPath: /root/.local/share/opencode
+              subPath: opencode
+            - name: vibe-data
               mountPath: /var/lib/containers
+              subPath: podman
       volumes:
-        - name: workspace
-          emptyDir: {}
-        - name: podman-storage
-          emptyDir: {}
+        - name: vibe-data
+          persistentVolumeClaim:
+            claimName: vibe-data
