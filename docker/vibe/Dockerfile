@@ -12,6 +12,10 @@ RUN apt-get update \
     gnupg \
     lsb-release \
     openssh-client \
+    podman \
+    slirp4netns \
+    uidmap \
+    fuse-overlayfs \
     python3 \
     tini \
     docker.io \
@@ -36,6 +40,10 @@ COPY entrypoint.sh /usr/local/bin/vibe-entrypoint
 RUN chmod +x /usr/local/bin/vibe-entrypoint
 
 ENV OPENCODE_PORT=3000
+
+COPY opencode/ /opt/opencode-config/
+RUN mkdir -p /root/.config/opencode /root/.local/share/opencode /workspace \
+  && cp -R /opt/opencode-config/. /root/.config/opencode/
 
 WORKDIR /workspace
 
