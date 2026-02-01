@@ -15,27 +15,15 @@ spec:
       labels:
         app: vibe
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        seccompProfile:
-          type: RuntimeDefault
       containers:
         - name: vibe
           image: ghcr.io/axot017/vibe:latest
           imagePullPolicy: Always
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
           env:
             - name: OPENCODE_PORT
               value: "3000"
             - name: DOCKER_HOST
-              value: unix:///run/user/1000/docker.sock
+              value: unix:///var/run/docker.sock
           envFrom:
             - secretRef:
                 name: vibe-env
@@ -67,19 +55,14 @@ spec:
             - name: workspace
               mountPath: /workspace
             - name: docker-run
-              mountPath: /run/user/1000
+              mountPath: /var/run
         - name: dind
-          image: docker:24-dind-rootless
+          image: docker:24-dind
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
+            privileged: true
           env:
             - name: DOCKER_TLS_CERTDIR
               value: ""
-            - name: XDG_RUNTIME_DIR
-              value: /run/user/1000
           resources:
             requests:
               cpu: 250m
@@ -88,14 +71,14 @@ spec:
               cpu: 2000m
               memory: 4Gi
           volumeMounts:
+            - name: docker-lib
+              mountPath: /var/lib/docker
             - name: docker-run
-              mountPath: /run/user/1000
-            - name: docker-data
-              mountPath: /home/rootless/.local/share/docker
+              mountPath: /var/run
       volumes:
         - name: workspace
           emptyDir: {}
-        - name: docker-run
+        - name: docker-lib
           emptyDir: {}
-        - name: docker-data
+        - name: docker-run
           emptyDir: {}
