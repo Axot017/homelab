@@ -13,6 +13,7 @@ RUN apt-get update \
     lsb-release \
     openssh-client \
     podman \
+    podman-compose \
     slirp4netns \
     uidmap \
     fuse-overlayfs \
@@ -44,6 +45,8 @@ ENV OPENCODE_PORT=3000
 COPY opencode/ /opt/opencode-config/
 RUN mkdir -p /root/.config/opencode /root/.local/share/opencode /workspace \
   && cp -R /opt/opencode-config/. /root/.config/opencode/
+
+RUN echo 'eval "$(mise activate bash)"' >> /root/.bashrc
 
 WORKDIR /workspace
 
