@@ -46,6 +46,8 @@ COPY opencode/ /opt/opencode-config/
 RUN mkdir -p /root/.config/opencode /root/.local/share/opencode /workspace \
   && cp -R /opt/opencode-config/. /root/.config/opencode/
 
+COPY containers/containers.conf /etc/containers/containers.conf
+
 RUN echo 'eval "$(mise activate bash)"' >> /root/.bashrc
 
 WORKDIR /workspace
