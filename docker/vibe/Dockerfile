@@ -14,6 +14,8 @@ RUN apt-get update \
     openssh-client \
     podman \
     podman-compose \
+    netavark \
+    aardvark-dns \
     slirp4netns \
     uidmap \
     fuse-overlayfs \
