@@ -19,11 +19,11 @@ variable "videos_bucket_name" {
 variable "backups_user_name" {
   type        = string
   description = "IAM user name for backup access."
-  default     = "homelab-backups"
+  default     = "homelab-backups-manager"
 }
 
 variable "videos_user_name" {
   type        = string
   description = "IAM user name for video upload access."
-  default     = "homelab-vibe-env-demos"
+  default     = "homelab-vibe-env-demos-manager"
 }

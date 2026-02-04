@@ -44,6 +44,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "backups" {
     id     = "cost-optimized-backups"
     status = "Enabled"
 
+    filter {}
+
     transition {
       days          = 7
       storage_class = "INTELLIGENT_TIERING"
@@ -96,6 +98,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "videos" {
   rule {
     id     = "expire-videos"
     status = "Enabled"
+
+    filter {}
 
     expiration {
       days = 7
