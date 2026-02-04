@@ -50,6 +50,8 @@ RUN mkdir -p /root/.config/opencode /root/.local/share/opencode /workspace \
 
 COPY containers/containers.conf /etc/containers/containers.conf
 
+COPY gitconfig /root/.gitconfig
+
 RUN echo 'eval "$(mise activate bash)"' >> /root/.bashrc
 
 WORKDIR /workspace
