@@ -28,6 +28,9 @@ spec:
             - secretRef:
                 name: vibe-env
                 optional: true
+            - secretRef:
+                name: aws-cli-credentials
+                optional: true
           ports:
             - name: opencode
               containerPort: 3000
