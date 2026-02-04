@@ -1,0 +1,47 @@
+name: OpenTofu Apply
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - infra/opentofu/**
+      - .github/workflows/opentofu-apply.yaml
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/opentofu
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: eu-central-1
+
+      - name: Format check
+        run: tofu fmt -check
+
+      - name: Init
+        run: tofu init
+
+      - name: Validate
+        run: tofu validate
+
+      - name: Plan
+        run: tofu plan -out=plan.tfplan
+
+      - name: Apply
+        run: tofu apply -auto-approve plan.tfplan
