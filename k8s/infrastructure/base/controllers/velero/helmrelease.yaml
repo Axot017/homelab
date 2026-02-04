@@ -21,7 +21,7 @@ spec:
       backupStorageLocation:
         - name: default
           provider: aws
-          bucket: mateuszledwon-homelab-backup
+          bucket: mateuszledwon-homelab-backups
           config:
             region: eu-central-1
       volumeSnapshotLocation:
