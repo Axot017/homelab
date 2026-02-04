@@ -20,6 +20,7 @@ RUN apt-get update \
     uidmap \
     fuse-overlayfs \
     python3 \
+    awscli \
     tini \
     docker.io \
   && rm -rf /var/lib/apt/lists/*
