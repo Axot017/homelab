@@ -19,4 +19,14 @@ EOF
   git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
 fi
 
+if [ -d /workspace ]; then
+  mise trust /workspace || true
+  for dir in /workspace/*; do
+    if [ -d "${dir}" ]; then
+      mise trust "${dir}" || true
+      (cd "${dir}" && mise install) || true
+    fi
+  done
+fi
+
 exec opencode web --hostname 0.0.0.0 --port "${OPENCODE_PORT}"
