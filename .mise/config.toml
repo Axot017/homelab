@@ -3,6 +3,7 @@ KUBECONFIG = "{{config_root}}/kubeconfig"
 
 [tools]
 age = "latest"
+velero = "latest"
 aws-cli = "latest"
 flux2 = "latest"
 github-cli = "latest"
