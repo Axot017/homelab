@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - ./github-token-sealed-secret.yaml
   - ./aws-key-sealed-secret.yaml
-  - ../../../base/homelab/vibe/
+  # - ../../../base/homelab/vibe/
