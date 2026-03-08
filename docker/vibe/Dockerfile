@@ -2,6 +2,8 @@ FROM node:20-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+ARG OPENCODE_VERSION=latest
+
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     bash \
@@ -37,7 +39,7 @@ RUN mkdir -p /etc/apt/keyrings \
 
 RUN curl -fsSL https://mise.run | MISE_INSTALL_PATH=/usr/local/bin/mise bash
 
-RUN npm install -g opencode-ai \
+RUN npm install -g "opencode-ai@${OPENCODE_VERSION}" \
   && npm cache clean --force
 
 COPY entrypoint.sh /usr/local/bin/vibe-entrypoint
