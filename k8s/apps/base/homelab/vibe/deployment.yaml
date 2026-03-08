@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: vibe
-          image: ghcr.io/axot017/vibe:latest
+          image: ghcr.io/axot017/vibe:1.2.21
           imagePullPolicy: Always
           securityContext:
             privileged: true
