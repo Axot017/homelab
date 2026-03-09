@@ -18,7 +18,7 @@ spec:
       containers:
         - name: vibe
           image: ghcr.io/axot017/vibe:1.2.21
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
           env:
@@ -55,9 +55,11 @@ spec:
             requests:
               cpu: 100m
               memory: 256Mi
+              ephemeral-storage: 512Mi
             limits:
               cpu: 4000m
               memory: 8Gi
+              ephemeral-storage: 4Gi
           volumeMounts:
             - name: vibe-data
               mountPath: /workspace
