@@ -65,9 +65,6 @@ spec:
             - name: vibe-data
               mountPath: /root/.local/share/opencode
               subPath: opencode
-            - name: vibe-data
-              mountPath: /var/lib/containers
-              subPath: podman
       volumes:
         - name: vibe-data
           persistentVolumeClaim:
