@@ -31,7 +31,6 @@ spec:
                     secretKeyRef:
                       name: renovate-github-token
                       key: token
-                      optional: true
                 - name: LOG_LEVEL
                   value: info
               resources:
