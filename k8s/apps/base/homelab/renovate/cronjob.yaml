@@ -12,11 +12,20 @@ spec:
     spec:
       template:
         spec:
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
           restartPolicy: Never
           containers:
             - name: renovate
               image: renovate/renovate:41
               imagePullPolicy: IfNotPresent
+              securityContext:
+                allowPrivilegeEscalation: false
+                runAsNonRoot: true
+                capabilities:
+                  drop:
+                    - ALL
               env:
                 - name: RENOVATE_PLATFORM
                   value: github
