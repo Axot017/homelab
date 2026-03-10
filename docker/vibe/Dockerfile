@@ -22,9 +22,10 @@ RUN apt-get update \
     uidmap \
     fuse-overlayfs \
     python3 \
-    awscli \
+    python3-pip \
     tini \
     docker.io \
+  && pip3 install --no-cache-dir awscli \
   && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /etc/apt/keyrings \
