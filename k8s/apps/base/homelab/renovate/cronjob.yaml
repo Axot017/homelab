@@ -35,8 +35,6 @@ spec:
                   value: Axot017/homelab,Axot017/app_73
                 - name: RENOVATE_AUTODISCOVER
                   value: "false"
-                - name: RENOVATE_PLATFORM_COMMIT
-                  value: "true"
                 - name: RENOVATE_TOKEN
                   valueFrom:
                     secretKeyRef:
