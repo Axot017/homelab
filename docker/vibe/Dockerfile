@@ -1,4 +1,4 @@
-FROM node:20-bookworm
+FROM mcr.microsoft.com/playwright:v1.58.2-noble
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -39,7 +39,9 @@ RUN mkdir -p /etc/apt/keyrings \
 
 RUN curl -fsSL https://mise.run | MISE_INSTALL_PATH=/usr/local/bin/mise bash
 
-RUN npm install -g "opencode-ai@${OPENCODE_VERSION}" \
+RUN npm install -g "opencode-ai@${OPENCODE_VERSION}" @playwright/cli@latest \
+  && ln -sf /usr/local/lib/node_modules/@playwright/cli/node_modules/.bin/playwright /usr/local/bin/playwright \
+  && playwright install chromium \
   && npm cache clean --force
 
 COPY entrypoint.sh /usr/local/bin/vibe-entrypoint
