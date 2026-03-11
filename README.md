@@ -252,43 +252,4 @@ kubectl get cluster nextcloud-postgres-recovered -n nextcloud -o yaml | \
   kubectl apply -f -
 ```
 
-### Full Cluster Rebuild with PostgreSQL Recovery
-
-During disaster recovery, after the CNPG operator is running:
-
-1. First, ensure the S3 credentials secret exists (apply sealed secret)
-
-2. Create recovery cluster instead of fresh bootstrap:
-```yaml
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: nextcloud-postgres
-  namespace: nextcloud
-spec:
-  instances: 1
-  storage:
-    storageClass: longhorn
-    size: 10Gi
-  
-  # Use recovery bootstrap instead of initdb
-  bootstrap:
-    recovery:
-      source: nextcloud-postgres-backup
-  
-  externalClusters:
-    - name: nextcloud-postgres-backup
-      barmanObjectStore:
-        destinationPath: s3://mateuszledwon-homelab-backup/postgres/nextcloud
-        s3Credentials:
-          accessKeyId:
-            name: postgres-s3-credentials
-            key: ACCESS_KEY_ID
-          secretAccessKey:
-            name: postgres-s3-credentials
-            key: SECRET_ACCESS_KEY
-        wal:
-          compression: gzip
-        data:
-          compression: gzip
 ```
