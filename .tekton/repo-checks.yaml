@@ -58,9 +58,11 @@ spec:
               script: |
                 set -eu
                 repo_url="$(params.repo-url)"
+                repo_dir="$(workspaces.output.path)/repo"
                 authed_url=$(printf '%s' "$repo_url" | sed "s#https://#https://x-access-token:${GIT_TOKEN}@#")
-                git clone "$authed_url" "$(workspaces.output.path)"
-                cd "$(workspaces.output.path)"
+                rm -rf "$repo_dir"
+                git clone "$authed_url" "$repo_dir"
+                cd "$repo_dir"
                 git checkout "$(params.revision)"
         params:
           - name: repo-url
@@ -81,7 +83,7 @@ spec:
           steps:
             - name: validate
               image: docker.io/bitnami/kubectl:1.32.2
-              workingDir: $(workspaces.source.path)
+              workingDir: $(workspaces.source.path)/repo
               script: |
                 set -eu
                 kubectl kustomize k8s/clusters/homelab >/dev/null
@@ -97,7 +99,7 @@ spec:
           steps:
             - name: fmt-validate
               image: ghcr.io/opentofu/opentofu:1.10.6
-              workingDir: $(workspaces.source.path)/infra/opentofu
+              workingDir: $(workspaces.source.path)/repo/infra/opentofu
               script: |
                 set -eu
                 tofu fmt -check -recursive
