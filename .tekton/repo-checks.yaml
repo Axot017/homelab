@@ -1,0 +1,108 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: repo-checks-
+  annotations:
+    pipelinesascode.tekton.dev/on-event: "[pull_request, push]"
+    pipelinesascode.tekton.dev/on-target-branch: "[main]"
+    pipelinesascode.tekton.dev/cancel-in-progress: "true"
+    pipelinesascode.tekton.dev/max-keep-runs: "10"
+spec:
+  params:
+    - name: repo-url
+      value: "{{ repo_url }}"
+    - name: revision
+      value: "{{ revision }}"
+    - name: git-auth-secret
+      value: "{{ git_auth_secret }}"
+  workspaces:
+    - name: source
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
+  pipelineSpec:
+    params:
+      - name: repo-url
+        type: string
+      - name: revision
+        type: string
+      - name: git-auth-secret
+        type: string
+    workspaces:
+      - name: source
+    tasks:
+      - name: clone
+        taskSpec:
+          params:
+            - name: repo-url
+              type: string
+            - name: revision
+              type: string
+            - name: git-auth-secret
+              type: string
+          workspaces:
+            - name: output
+          steps:
+            - name: clone
+              image: docker.io/alpine/git:2.47.2
+              env:
+                - name: GIT_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: $(params.git-auth-secret)
+                      key: git-provider-token
+              script: |
+                set -eu
+                repo_url="$(params.repo-url)"
+                authed_url=$(printf '%s' "$repo_url" | sed "s#https://#https://x-access-token:${GIT_TOKEN}@#")
+                git clone "$authed_url" "$(workspaces.output.path)"
+                cd "$(workspaces.output.path)"
+                git checkout "$(params.revision)"
+        params:
+          - name: repo-url
+            value: $(params.repo-url)
+          - name: revision
+            value: $(params.revision)
+          - name: git-auth-secret
+            value: $(params.git-auth-secret)
+        workspaces:
+          - name: output
+            workspace: source
+      - name: validate-flux
+        runAfter:
+          - clone
+        taskSpec:
+          workspaces:
+            - name: source
+          steps:
+            - name: validate
+              image: docker.io/bitnami/kubectl:1.32.2
+              workingDir: $(workspaces.source.path)
+              script: |
+                set -eu
+                kubectl kustomize k8s/clusters/homelab >/dev/null
+        workspaces:
+          - name: source
+            workspace: source
+      - name: validate-opentofu
+        runAfter:
+          - clone
+        taskSpec:
+          workspaces:
+            - name: source
+          steps:
+            - name: fmt-validate
+              image: ghcr.io/opentofu/opentofu:1.10.6
+              workingDir: $(workspaces.source.path)/infra/opentofu
+              script: |
+                set -eu
+                tofu fmt -check -recursive
+                tofu init -backend=false
+                tofu validate
+        workspaces:
+          - name: source
+            workspace: source
