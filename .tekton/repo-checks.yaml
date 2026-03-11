@@ -84,9 +84,11 @@ spec:
             - name: validate
               image: docker.io/rancher/kubectl:v1.32.2
               workingDir: $(workspaces.source.path)/repo
-              script: |
-                set -eu
-                kubectl kustomize k8s/clusters/homelab >/dev/null
+              command:
+                - kubectl
+              args:
+                - kustomize
+                - k8s/clusters/homelab
         workspaces:
           - name: source
             workspace: source
