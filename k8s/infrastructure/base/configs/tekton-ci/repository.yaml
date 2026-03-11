@@ -1,0 +1,9 @@
+apiVersion: pipelinesascode.tekton.dev/v1alpha1
+kind: Repository
+metadata:
+  name: homelab
+  namespace: homelab-ci
+spec:
+  url: https://github.com/Axot017/homelab
+  settings:
+    pipelinerun_provenance: default_branch

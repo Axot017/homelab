@@ -1,0 +1,38 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - https://github.com/openshift-pipelines/pipelines-as-code/releases/download/v0.42.0/release.k8s.yaml
+  - ./controller-route.yaml
+patches:
+  - target:
+      kind: ConfigMap
+      name: pipelines-as-code
+      namespace: pipelines-as-code
+    patch: |-
+      - op: add
+        path: /data/application-name
+        value: Homelab Tekton CI
+      - op: add
+        path: /data/controller-url
+        value: https://tekton.mateuszledwon.com
+      - op: add
+        path: /data/provider
+        value: GitHub App
+      - op: add
+        path: /data/secret-github-app-token-scoped
+        value: "true"
+      - op: add
+        path: /data/remote-tasks
+        value: "true"
+      - op: add
+        path: /data/skip-push-event-for-pr-commits
+        value: "true"
+      - op: add
+        path: /data/default-max-keep-runs
+        value: "10"
+      - op: add
+        path: /data/error-log-snippet
+        value: "true"
+      - op: add
+        path: /data/error-log-snippet-number-of-lines
+        value: "10"
