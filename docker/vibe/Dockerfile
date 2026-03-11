@@ -42,8 +42,7 @@ RUN mkdir -p /etc/apt/keyrings \
 
 RUN curl -fsSL https://mise.run | MISE_INSTALL_PATH=/usr/local/bin/mise bash
 
-RUN npm install -g "opencode-ai@${OPENCODE_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" \
-  && ln -sf /usr/lib/node_modules/playwright/cli.js /usr/local/bin/playwright-cli \
+RUN npm install -g "opencode-ai@${OPENCODE_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" @playwright/cli@latest \
   && playwright install chromium \
   && npm cache clean --force
 
