@@ -3,6 +3,7 @@ FROM mcr.microsoft.com/playwright:v1.58.2-noble
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG OPENCODE_VERSION=latest
+ARG PLAYWRIGHT_VERSION=1.58.2
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -41,8 +42,7 @@ RUN mkdir -p /etc/apt/keyrings \
 
 RUN curl -fsSL https://mise.run | MISE_INSTALL_PATH=/usr/local/bin/mise bash
 
-RUN PLAYWRIGHT_VERSION="$(npm view @playwright/cli@latest dependencies.playwright)" \
-  && npm install -g "opencode-ai@${OPENCODE_VERSION}" @playwright/cli@latest "playwright@${PLAYWRIGHT_VERSION}" \
+RUN npm install -g "opencode-ai@${OPENCODE_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" @playwright/cli@latest \
   && playwright install chromium \
   && npm cache clean --force
 
