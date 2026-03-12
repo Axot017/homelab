@@ -82,13 +82,19 @@ spec:
             - name: source
           steps:
             - name: validate
-              image: docker.io/rancher/kubectl:v1.32.2
+              image: ghcr.io/fluxcd/flux-cli:v2.6.4
               workingDir: $(workspaces.source.path)/repo
               command:
-                - kubectl
+                - flux
               args:
-                - kustomize
-                - k8s/clusters/homelab
+                - build
+                - kustomization
+                - flux-system
+                - --path
+                - ./k8s/clusters/homelab
+                - --kustomization-file
+                - ./k8s/clusters/homelab/flux-system/gotk-sync.yaml
+                - --dry-run
         workspaces:
           - name: source
             workspace: source
