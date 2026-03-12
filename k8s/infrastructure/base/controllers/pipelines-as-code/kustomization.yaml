@@ -16,6 +16,9 @@ patches:
         path: /data/controller-url
         value: https://tekton.mateuszledwon.com
       - op: add
+        path: /data/tekton-dashboard-url
+        value: https://tekton-dashboard.mateuszledwon.com
+      - op: add
         path: /data/provider
         value: GitHub App
       - op: add
