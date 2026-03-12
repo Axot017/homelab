@@ -84,17 +84,15 @@ spec:
             - name: validate
               image: ghcr.io/fluxcd/flux-cli:v2.6.4
               workingDir: $(workspaces.source.path)/repo
-              command:
-                - flux
-              args:
-                - build
-                - kustomization
-                - flux-system
-                - --path
-                - ./k8s/clusters/homelab
-                - --kustomization-file
-                - ./k8s/clusters/homelab/flux-system/gotk-sync.yaml
-                - --dry-run
+              script: |
+                set -eu
+                tmp_repo=/tmp/repo
+                rm -rf "$tmp_repo"
+                cp -a . "$tmp_repo"
+                flux build kustomization flux-system \
+                  --path "$tmp_repo/k8s/clusters/homelab" \
+                  --kustomization-file "$tmp_repo/k8s/clusters/homelab/flux-system/gotk-sync.yaml" \
+                  --dry-run
         workspaces:
           - name: source
             workspace: source
