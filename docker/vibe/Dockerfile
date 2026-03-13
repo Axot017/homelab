@@ -27,6 +27,7 @@ RUN apt-get update \
     python3 \
     pipx \
     tini \
+    unzip \
     docker.io \
   && pipx install awscli \
   && ln -sf /root/.local/bin/aws /usr/local/bin/aws \
