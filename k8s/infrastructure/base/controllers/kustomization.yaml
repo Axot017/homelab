@@ -5,6 +5,7 @@ resources:
   - ./cloudflare/
   - ./cnpg-operator/
   - ./envoy-gateway/
+  - ./harbor/
   - ./longhorn/
   - ./metrics-server/
   - ./pipelines-as-code/
