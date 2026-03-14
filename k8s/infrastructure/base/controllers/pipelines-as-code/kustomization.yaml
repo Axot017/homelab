@@ -32,7 +32,7 @@ patches:
         value: "true"
       - op: add
         path: /data/default-max-keep-runs
-        value: "10"
+        value: "3"
       - op: add
         path: /data/error-log-snippet
         value: "true"

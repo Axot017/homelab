@@ -50,7 +50,7 @@ spec:
       persistentVolumeClaim:
         registry:
           storageClass: longhorn
-          size: 50Gi
+          size: 10Gi
         jobservice:
           jobLog:
             storageClass: longhorn
