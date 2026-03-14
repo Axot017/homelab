@@ -6,7 +6,7 @@ metadata:
     pipelinesascode.tekton.dev/on-event: "[pull_request, push]"
     pipelinesascode.tekton.dev/on-target-branch: "[main]"
     pipelinesascode.tekton.dev/cancel-in-progress: "true"
-    pipelinesascode.tekton.dev/max-keep-runs: "10"
+    pipelinesascode.tekton.dev/max-keep-runs: "3"
 spec:
   params:
     - name: repo-url
@@ -23,7 +23,7 @@ spec:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 5Gi
+              storage: 2Gi
   pipelineSpec:
     params:
       - name: repo-url
