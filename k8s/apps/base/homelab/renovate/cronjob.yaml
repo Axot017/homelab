@@ -32,7 +32,7 @@ spec:
                 - name: RENOVATE_ENDPOINT
                   value: https://api.github.com/
                 - name: RENOVATE_REPOSITORIES
-                  value: Axot017/homelab,Axot017/app_73,Axot017/live_pi
+                  value: Axot017/homelab,Axot017/app_73,Axot017/live_pi,Axot017/dotfiles
                 - name: RENOVATE_AUTODISCOVER
                   value: "false"
                 - name: RENOVATE_PLATFORM_COMMIT
