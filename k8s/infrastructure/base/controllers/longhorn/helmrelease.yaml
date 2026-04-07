@@ -24,7 +24,7 @@ spec:
     defaultBackupStore:
       backupTarget: s3://mateuszledwon-homelab-backups@eu-central-1/longhorn/
       backupTargetCredentialSecret: longhorn-aws-key
-      pollInterval: 180
+      pollInterval: 14400 # 4 hours
     defaultSettings:
       defaultReplicaCount: 1
       storageMinimalAvailablePercentage: 10
