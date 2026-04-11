@@ -4,7 +4,8 @@
     "config:recommended"
   ],
   "enabledManagers": [
-    "kubernetes"
+    "kubernetes",
+    "mise"
   ],
   "kubernetes": {
     "managerFilePatterns": [
