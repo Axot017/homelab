@@ -7,11 +7,6 @@
     "kubernetes",
     "mise"
   ],
-  "kubernetes": {
-    "managerFilePatterns": [
-      "/^k8s\\/.*\\.ya?ml$/"
-    ]
-  },
   "ignorePaths": [
     "k8s/clusters/homelab/flux-system/gotk-components.yaml"
   ],
