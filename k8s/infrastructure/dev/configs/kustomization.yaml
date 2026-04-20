@@ -5,5 +5,5 @@ resources:
   - ./envoy-gateway/
   - ./longhorn/
   - ./tekton/
-  # - ./pipelines-as-code/
+  - ./pipelines-as-code/
   - ./velero/
