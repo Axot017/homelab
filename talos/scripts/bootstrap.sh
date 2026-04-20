@@ -20,6 +20,8 @@ REPO_ROOT="$(realpath "$SCRIPT_DIR/../..")"
 NODE_IP="192.168.18.101"
 TALOSCONFIG="$REPO_ROOT/talos/clusterconfig/talosconfig"
 KUBECONFIG_PATH="$REPO_ROOT/kubeconfig"
+SEALED_SECRETS_KEY="$REPO_ROOT/backup/sealed-secrets-key.yaml"
+SEALED_SECRETS_KEY_SOPS="$REPO_ROOT/backup/sealed-secrets-key.sops.yaml"
 
 GITHUB_USER="Axot017"
 GITHUB_REPO="homelab"
@@ -91,6 +93,44 @@ prompt_github_token() {
     
     export GITHUB_TOKEN="$token"
     log_info "GITHUB_TOKEN exported"
+}
+
+apply_backup_sealed_secrets_key() {
+    local backup_file=""
+    local apply_choice=""
+
+    if [[ -f "$SEALED_SECRETS_KEY" ]]; then
+        backup_file="$SEALED_SECRETS_KEY"
+    elif [[ -f "$SEALED_SECRETS_KEY_SOPS" ]]; then
+        backup_file="$SEALED_SECRETS_KEY_SOPS"
+    else
+        log_info "No backup sealed secrets key found in $REPO_ROOT/backup, skipping"
+        return 0
+    fi
+
+    echo ""
+    read -rp "Backup sealed secrets key found at $backup_file. Apply it now? [y/N]: " apply_choice
+    if [[ ! "$apply_choice" =~ ^[Yy]$ ]]; then
+        log_info "Skipping backup sealed secrets key apply"
+        return 0
+    fi
+
+    if [[ ! -f "$KUBECONFIG_PATH" ]]; then
+        log_warn "Kubeconfig not found at $KUBECONFIG_PATH, skipping backup sealed secrets key apply"
+        return 0
+    fi
+
+    log_info "Applying backup sealed secrets key"
+    if [[ "$backup_file" == "$SEALED_SECRETS_KEY_SOPS" ]]; then
+        if ! command -v sops &>/dev/null; then
+            log_warn "sops is required to decrypt $SEALED_SECRETS_KEY_SOPS, skipping"
+            return 0
+        fi
+
+        sops -d "$backup_file" | kubectl --kubeconfig "$KUBECONFIG_PATH" apply -f -
+    else
+        kubectl --kubeconfig "$KUBECONFIG_PATH" apply -f "$backup_file"
+    fi
 }
 
 # Step 1: Bootstrap Talos cluster
@@ -174,8 +214,12 @@ if ! flux check --pre; then
 fi
 log_info "Pre-flight checks passed!"
 
-# Step 8: Bootstrap Flux
-log_step "Step 8: Bootstrap Flux"
+# Step 8: Restore sealed secrets backup
+log_step "Step 8: Restore sealed secrets backup"
+apply_backup_sealed_secrets_key
+
+# Step 9: Bootstrap Flux
+log_step "Step 9: Bootstrap Flux"
 log_info "Bootstrapping Flux to $GITHUB_USER/$GITHUB_REPO..."
 flux bootstrap github \
     --owner="$GITHUB_USER" \
