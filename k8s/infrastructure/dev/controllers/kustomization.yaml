@@ -8,7 +8,6 @@ resources:
   - ./longhorn/
   - ./metrics-server/
   - ./pipelines-as-code/
-  # Temporarily disabled to reduce pressure on the single-node cluster:
-  # - ./prometheus-stack/
+  - ./prometheus-stack/
   - ./tekton/
   - ./velero/
