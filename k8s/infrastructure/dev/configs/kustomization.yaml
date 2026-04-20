@@ -4,5 +4,6 @@ resources:
   - ./cilium/
   - ./envoy-gateway/
   - ./longhorn/
-  - ./tekton-ci/
+  # - ./tekton/
+  # - ./pipelines-as-code/
   - ./velero/

@@ -4,6 +4,7 @@ resources:
   - ./cert-manager/
   - ./cloudflare/
   - ./cnpg-operator/
+  - ./gateway-api/
   - ./envoy-gateway/
   - ./longhorn/
   - ./metrics-server/
