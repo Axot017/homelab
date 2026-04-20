@@ -25,11 +25,3 @@ spec:
       kind: Deployment
       name: cert-manager
       namespace: cert-manager
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: envoy-gateway
-      namespace: envoy-gateway-system
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: velero
-      namespace: velero
