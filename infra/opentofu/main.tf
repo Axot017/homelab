@@ -19,14 +19,6 @@ resource "aws_s3_bucket_ownership_controls" "backups" {
   }
 }
 
-resource "aws_s3_bucket_versioning" "backups" {
-  bucket = aws_s3_bucket.backups.id
-
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
-
 resource "aws_s3_bucket_server_side_encryption_configuration" "backups" {
   bucket = aws_s3_bucket.backups.id
 
@@ -51,9 +43,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "backups" {
       storage_class = "INTELLIGENT_TIERING"
     }
 
-    noncurrent_version_expiration {
-      noncurrent_days = 3
-    }
   }
 }
 
@@ -124,8 +113,7 @@ resource "aws_iam_policy" "backups" {
         Action = [
           "s3:GetBucketLocation",
           "s3:ListBucket",
-          "s3:ListBucketMultipartUploads",
-          "s3:ListBucketVersions"
+          "s3:ListBucketMultipartUploads"
         ]
         Resource = aws_s3_bucket.backups.arn
       },

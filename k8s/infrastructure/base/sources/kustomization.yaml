@@ -10,6 +10,5 @@ resources:
   - ./helm-pihole.yaml
   - ./helm-prometheus-stack.yaml
   - ./helm-sealed-secrets.yaml
-  - ./helm-velero.yaml
   - ./oci-envoy-gateway.yaml
   - ./oci-valkey.yaml
