@@ -11,4 +11,3 @@ resources:
   - ./pipelines-as-code/
   - ./prometheus-stack/
   - ./tekton/
-  - ./velero/

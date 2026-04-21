@@ -29,7 +29,3 @@ spec:
       kind: Deployment
       name: envoy-gateway
       namespace: envoy-gateway-system
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: velero
-      namespace: velero

@@ -48,7 +48,6 @@ talosctl apply-config --nodes <node-ip> --file talos/clusterconfig/homelab-<node
 - Access to this Git repository
 - SOPS key to decrypt `backup/sealed-secrets-key.sops.yaml`
 - Talos configuration files
-- AWS credentials for Velero (to restore backups)
 
 ### Step 1: Rebuild Talos Cluster
 
@@ -112,22 +111,7 @@ kubectl get applications -n argocd -w
 # 3. metallb (LoadBalancer IPs)
 ```
 
-### Step 6: Restore Data from Velero Backup
-
-Once Velero is running:
-
-```bash
-# Check available backups
-velero backup get
-
-# Restore from latest backup
-velero restore create --from-backup <backup-name>
-
-# Or restore specific namespaces
-velero restore create --from-backup <backup-name> --include-namespaces monitoring,cloudflare
-```
-
-### Step 7: Verify Recovery
+### Step 6: Verify Recovery
 
 ```bash
 # Check all pods are running
@@ -141,22 +125,6 @@ kubectl get volumes -n longhorn-system
 
 # Check external access
 curl -I https://argocd.mateuszledwon.com  # (if HTTPRoute is configured)
-```
-
----
-
-## Scenario 5: Restore Single Application from Backup
-
-```bash
-# List available backups
-kubectl get backups -n velero
-
-# Restore specific namespace
-velero restore create --from-backup daily-full-backup-20240109030000 \
-  --include-namespaces my-app-namespace
-
-# Check restore status
-velero restore get
 ```
 
 ---
