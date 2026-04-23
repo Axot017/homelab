@@ -24,7 +24,7 @@ spec:
 
     prometheus:
       prometheusSpec:
-        retention: 7d
+        retention: 3d
         podMonitorSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         storageSpec:
