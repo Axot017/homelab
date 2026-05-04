@@ -5,6 +5,17 @@ metadata:
   namespace: pihole
 spec:
   interval: 10m
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |-
+              apiVersion: v1
+              kind: PersistentVolumeClaim
+              metadata:
+                name: pihole
+                labels:
+                  recurring-job.longhorn.io/source: enabled
+                  recurring-job.longhorn.io/longhorn-daily-volume-backup: enabled
   chart:
     spec:
       chart: pihole
