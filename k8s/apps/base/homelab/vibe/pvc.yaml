@@ -3,6 +3,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: vibe-data
   namespace: vibe
+  labels:
+    recurring-job.longhorn.io/source: enabled
+    recurring-job.longhorn.io/longhorn-daily-volume-backup: enabled
 spec:
   accessModes:
     - ReadWriteOnce

@@ -6,6 +6,11 @@ metadata:
 spec:
   instances: 1
 
+  inheritedMetadata:
+    labels:
+      recurring-job.longhorn.io/source: enabled
+      recurring-job.longhorn.io/longhorn-daily-volume-backup: enabled
+
   storage:
     storageClass: longhorn
     size: 10Gi

@@ -44,6 +44,9 @@ spec:
       enabled: true
       storageClass: longhorn
       size: 50Gi
+      labels:
+        recurring-job.longhorn.io/source: enabled
+        recurring-job.longhorn.io/longhorn-daily-volume-backup: enabled
 
     internalDatabase:
       enabled: false

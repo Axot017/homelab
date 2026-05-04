@@ -8,4 +8,28 @@ spec:
   cron: "0 4 * * *"
   retain: 1
   parameters:
-    volume-backup-policy: if-not-present
+    volume-backup-policy: disabled
+---
+apiVersion: longhorn.io/v1beta2
+kind: RecurringJob
+metadata:
+  name: longhorn-daily-volume-backup
+  namespace: longhorn-system
+spec:
+  task: backup
+  cron: "30 4 * * *"
+  retain: 7
+  concurrency: 1
+---
+apiVersion: longhorn.io/v1beta2
+kind: RecurringJob
+metadata:
+  name: longhorn-daily-snapshot-cleanup
+  namespace: longhorn-system
+spec:
+  task: snapshot-cleanup
+  groups:
+    - default
+  cron: "0 5 * * *"
+  retain: 0
+  concurrency: 1
