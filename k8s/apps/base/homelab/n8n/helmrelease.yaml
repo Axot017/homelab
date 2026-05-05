@@ -5,6 +5,10 @@ metadata:
   namespace: n8n
 spec:
   interval: 10m
+  install:
+    timeout: 15m
+  upgrade:
+    timeout: 15m
   chart:
     spec:
       chart: n8n
@@ -29,8 +33,25 @@ spec:
 
     db:
       type: postgresdb
+      postgresdb:
+        connectionTimeout: 120000
 
     main:
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: http
+        initialDelaySeconds: 180
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 12
+      readinessProbe:
+        httpGet:
+          path: /healthz/readiness
+          port: http
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 12
       resources:
         requests:
           cpu: 100m
