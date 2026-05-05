@@ -30,6 +30,9 @@ spec:
     db:
       type: postgresdb
 
+    taskRunners:
+      mode: external
+
     main:
       resources:
         requests:
