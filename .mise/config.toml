@@ -3,7 +3,7 @@ KUBECONFIG = "{{config_root}}/kubeconfig"
 
 [tools]
 age = "1.3.1"
-aws-cli = "2.34.57"
+aws-cli = "2.35.4"
 flux2 = "2.8.8"
 github-cli = "2.94.0"
 helm = "4.2.0"
