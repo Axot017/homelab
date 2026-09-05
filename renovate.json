@@ -4,9 +4,15 @@
     "config:recommended"
   ],
   "enabledManagers": [
+    "flux",
     "kubernetes",
     "mise"
   ],
+  "flux": {
+    "managerFilePatterns": [
+      "/^k8s\\/.*\\.ya?ml$/"
+    ]
+  },
   "kubernetes": {
     "managerFilePatterns": [
       "/^k8s\\/.*\\.ya?ml$/"
