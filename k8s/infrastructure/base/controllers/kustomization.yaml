@@ -11,3 +11,4 @@ resources:
   - ./pipelines-as-code/
   - ./prometheus-stack/
   - ./tekton/
+  - ./vertical-pod-autoscaler/
