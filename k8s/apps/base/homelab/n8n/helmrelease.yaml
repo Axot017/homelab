@@ -58,7 +58,7 @@ spec:
           memory: 128Mi
         limits:
           cpu: 512m
-          memory: 512Mi
+          memory: 1Gi
 
     worker:
       mode: queue
