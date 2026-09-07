@@ -18,7 +18,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: renovate
-              image: renovate/renovate:44.68
+              image: renovate/renovate:44.69
               imagePullPolicy: IfNotPresent
               securityContext:
                 allowPrivilegeEscalation: false
