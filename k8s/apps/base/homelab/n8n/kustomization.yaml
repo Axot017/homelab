@@ -6,3 +6,7 @@ resources:
   - ./namespace.yaml
   - ./postgres.yaml
   - ./valkey-helmrelease.yaml
+  - ./vpa-main.yaml
+  - ./vpa-mcp-webhook.yaml
+  - ./vpa-webhook.yaml
+  - ./vpa-worker.yaml
